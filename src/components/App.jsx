@@ -11,9 +11,9 @@ export class App extends Component {
     filter: '',
   };
 
-  addContact = (contacts, name) => {
-    if (this.state.contacts.some(el => el.name === name)) {
-      alert(`${name} is already in contacts!`);
+  addContact = contacts => {
+    if (this.state.contacts.some(el => el.name === contacts.name)) {
+      alert(`${contacts.name} is already in contacts!`);
       return;
     }
     const contactsList = { id: nanoid(), ...contacts };
