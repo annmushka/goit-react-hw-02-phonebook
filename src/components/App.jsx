@@ -4,12 +4,24 @@ import { GlobalStyle } from './GlobalStyle';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
-
+const LOCAL_KEY = 'contacts';
 export class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
+  componentDidMount() {
+    const localData = JSON.parse(localStorage.getItem(LOCAL_KEY));
+    if (localData) {
+      this.setState({ contacts: localData });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(this.state.contacts));
+    }
+  }
 
   addContact = contacts => {
     if (this.state.contacts.some(el => el.name === contacts.name)) {
